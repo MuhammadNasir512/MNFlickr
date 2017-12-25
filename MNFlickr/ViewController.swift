@@ -13,19 +13,29 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        loadFlickrAPIData()
+    }
+    
+    fileprivate func parseData(_ data: Data) {
+        parseDataToJson(data)
+    }
+    
+    fileprivate func createImageModels(fromJSON json: JSON) {
+        print("AAAAA:\(json)")
+    }
+    
+    fileprivate func presentErrorToUser(withMessage message: String) {
+        print("ERROR: \(message)")
+    }
+}
+
+extension ViewController {
+    
+    fileprivate func loadFlickrAPIData() {
         let urLString = "https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1"
         let requestManager = RequestsManager(
             withUrlString: urLString, successCallback: { (data: Data) in
-                
-                guard var dataString = String(data: data, encoding: .utf8) else { return }
-                dataString = dataString.replacingOccurrences(of: "\\'", with: "'")
-                dataString = dataString.replacingOccurrences(of: "\n", with: "")
-                dataString = dataString.replacingOccurrences(of: "\t", with: "")
-                guard let correctData = dataString.data(using: .utf8) else { return }
-                let json = JSON(data: correctData)
-                print("AAAAA:\(json)")
-//                print("\(dataString)")
+                self.parseData(data)
         },
             failCallback: { (error: Error?, response: URLResponse?) in
                 print("ERROR:\(error?.localizedDescription)")
@@ -35,3 +45,12 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController {
+    
+    fileprivate func parseDataToJson(_ data: Data) {
+        let dataParser = DataParser(withData: data, completionHandler: { (json) in
+            self.createImageModels(fromJSON: json)
+        })
+        dataParser.parseData()
+    }
+}
