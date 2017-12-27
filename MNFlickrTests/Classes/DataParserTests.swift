@@ -16,10 +16,17 @@ class DataParserTests: XCTestCase {
         let expect = expectation(description: "Expectation")
         
         let data = Data()
-        let dataParser = DataParser(withData: data, completionHandler: { (jsonObject) in
-            expect.fulfill()
-            XCTAssertEqual(jsonObject, JSON.null)
+        let dataParser = DataParser(
+            withData: data,
+            successHandler: { (json: JSON) in
+                expect.fulfill()
+                XCTFail()
+        },
+            failedHandler: { (errorMessage: String) in
+                expect.fulfill()
+                XCTAssertEqual(errorMessage, "Failed: Invalid or Empty JSON")
         })
+        
         dataParser.parseData()
         waitForExpectations(timeout: 10) { error in }
         
@@ -33,9 +40,15 @@ class DataParserTests: XCTestCase {
             XCTFail()
             return
         }
-        let dataParser = DataParser(withData: data, completionHandler: { (jsonObject) in
-            expect.fulfill()
-            XCTAssertEqual(jsonObject, JSON.null)
+        let dataParser = DataParser(
+            withData: data,
+            successHandler: { (json: JSON) in
+                expect.fulfill()
+                XCTFail()
+        },
+            failedHandler: { (errorMessage: String) in
+                expect.fulfill()
+                XCTAssertEqual(errorMessage, "Failed: Invalid or Empty JSON")
         })
         dataParser.parseData()
         waitForExpectations(timeout: 4) { error in }
@@ -50,27 +63,37 @@ class DataParserTests: XCTestCase {
             XCTFail()
             return
         }
-        let dataParser = DataParser(withData: data, completionHandler: { (jsonObject) in
-            expect.fulfill()
-            XCTAssertTrue(JSON.null != jsonObject)
-            
-            let jsonArray = jsonObject["items"]
-            XCTAssertTrue(JSON.null != jsonArray)
-            XCTAssertEqual(jsonArray.arrayValue.count, 20)
-            
-            let firstItem = jsonArray[0]
-            XCTAssertTrue(JSON.null != firstItem)
-            
-            let firstITemAuthorId = firstItem["author_id"]
-            XCTAssertEqual(firstITemAuthorId, "93931621@N03")
-            
-            let mediaObjectFirstItem = firstItem["media"]["m"]
-            XCTAssertTrue(JSON.null != mediaObjectFirstItem)
-            XCTAssertEqual(mediaObjectFirstItem, "https://farm5.staticflickr.com/4644/24409443907_d029fdd84b_m.jpg")
-            
+        
+        let dataParser = DataParser(
+            withData: data,
+            successHandler: { (json: JSON) in
+                expect.fulfill()
+                self.doTestsOn(json: json)
+        },
+            failedHandler: { (errorMessage: String) in
+                expect.fulfill()
+                XCTFail()
         })
         dataParser.parseData()
         waitForExpectations(timeout: 4) { error in }
     }
     
+    private func doTestsOn(json jsonObject: JSON) {
+        
+        XCTAssertTrue(JSON.null != jsonObject)
+        
+        let jsonArray = jsonObject["items"]
+        XCTAssertTrue(JSON.null != jsonArray)
+        XCTAssertEqual(jsonArray.arrayValue.count, 20)
+        
+        let firstItem = jsonArray[0]
+        XCTAssertTrue(JSON.null != firstItem)
+        
+        let firstITemAuthorId = firstItem["author_id"]
+        XCTAssertEqual(firstITemAuthorId, "93931621@N03")
+        
+        let mediaObjectFirstItem = firstItem["media"]["m"]
+        XCTAssertTrue(JSON.null != mediaObjectFirstItem)
+        XCTAssertEqual(mediaObjectFirstItem, "https://farm5.staticflickr.com/4644/24409443907_d029fdd84b_m.jpg")
+    }
 }
