@@ -51,7 +51,6 @@ public class DataParser: NSObject {
         dataString = dataString.replacingOccurrences(of: "\\'", with: "'")
         dataString = dataString.replacingOccurrences(of: "\n", with: "")
         dataString = dataString.replacingOccurrences(of: "\t", with: "")
-        print(dataString)
         guard let correctData = dataString.data(using: .utf8) else { return JSON.null }
         let json = JSON(data: correctData)
         return json
