@@ -82,7 +82,7 @@ class DataParserTests: XCTestCase {
         
         XCTAssertTrue(JSON.null != jsonObject)
         
-        let jsonArray = jsonObject["items"]
+        let jsonArray = jsonObject[Constants.JSONKeys.keyItems]
         XCTAssertTrue(JSON.null != jsonArray)
         XCTAssertEqual(jsonArray.arrayValue.count, 20)
         
