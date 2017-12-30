@@ -8,15 +8,23 @@
 
 import UIKit
 
-class ViewController: UIViewController, ViewControllerPresenterProtocol {
+public class ViewController: UIViewController, ViewControllerPresenterProtocol {
 
-	var presenter: ViewControllerPresenter?
+    static let CellIdentifier = "ImageItemCell"
     
-    override func viewDidLoad() {
+	var presenter: ViewControllerPresenter?
+    fileprivate var imagesArray: [ImageModel]?
+    
+    @IBOutlet weak var tableView: UITableView?
+    
+    override public func viewDidLoad() {
         super.viewDidLoad()
+        guard let tableView = tableView else { return }
+        tableView.register(UINib(nibName: "ImageItemTableCell", bundle: nil), forCellReuseIdentifier: ViewController.CellIdentifier)
+        self.title = "Public Images"
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override public func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         guard let presenter = presenter else { return }
         presenter.loadFlickrImages()
@@ -27,6 +35,28 @@ class ViewController: UIViewController, ViewControllerPresenterProtocol {
     }
     
     func succcess(imagesArray images: [ImageModel]) {
-//        table reload data with images array
+        guard let tableView = tableView else { return }
+        imagesArray = images
+        tableView.reloadData()
+    }
+}
+
+extension ViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    public func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard let imagesArray = imagesArray else { return 0 }
+        return imagesArray.count
+    }
+    
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cellOptional = tableView.dequeueReusableCell(withIdentifier: ViewController.CellIdentifier, for: indexPath) as? ImageItemTableCell
+        guard let cell = cellOptional, let model = imagesArray?[indexPath.row] else { return UITableViewCell() }
+        cell.reloadCell(withModel: model)
+        return cell
     }
 }
