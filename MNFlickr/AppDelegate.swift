@@ -12,7 +12,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var module: Module?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let mainStoryboardIpad = UIStoryboard(name: "Main", bundle: nil)
@@ -26,8 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func setupHomeScreenModule(withViewController viewController: ViewController) {
-        module = Module(withViewController: viewController)
-        module?.setupModule()
+        let presenter = ViewControllerPresenter(withDelegate: viewController)
+        let interactor = ViewControllerInteractor(withDelegate: presenter)
+        let module = Module(withViewController: viewController)
+        module.presenter = presenter
+        module.interactor = interactor
+        module.setupModule()
     }
 }
 

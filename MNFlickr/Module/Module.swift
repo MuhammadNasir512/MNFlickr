@@ -11,6 +11,8 @@ import UIKit
 class Module: NSObject {
     
     var viewController: ViewController?
+    var presenter: ViewControllerPresenter?
+    var interactor: ViewControllerInteractor?
     
     private override init() { }
     
@@ -19,9 +21,13 @@ class Module: NSObject {
     }
     
     public func setupModule() {
-        guard let viewController = viewController else { return }
-        let presenter = ViewControllerPresenter(withDelegate: viewController)
-        let interactor = ViewControllerInteractor(withDelegate: presenter)
+        guard
+            let viewController = viewController,
+            let presenter = presenter,
+            let interactor = interactor
+            
+            else { return }
+        
         viewController.presenter = presenter
         presenter.interactor = interactor
     }

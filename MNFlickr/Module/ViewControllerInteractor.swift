@@ -17,24 +17,27 @@ protocol ViewControllerInteractorProtocol: NSObjectProtocol {
 class ViewControllerInteractor: NSObject {
     
     weak var delegate: ViewControllerInteractorProtocol?
+    var requestManager = RequestsManager()
     
+//    var urlString = "https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1"
+    var urlString = "https://google.com/"
+
     private override init() { }
     
-    init(withDelegate delegate: ViewControllerInteractorProtocol) {
+    init(withDelegate delegate: ViewControllerInteractorProtocol?) {
         self.delegate = delegate
     }
     
     public func loadFlickrAPIData() {
         
-        let urLString = "https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1"
-        let requestManager = RequestsManager(
-            withUrlString: urLString, successCallback: { (data: Data) in
-                self.parseDataToJson(data)
-        },
-            failCallback: { (error: Error?, response: URLResponse?) in
-                let errorMessage = error?.localizedDescription ?? "Unknown Error"
-                self.delegate?.encounterError(errorMessage)
-        })
+        requestManager.urlString = urlString
+        requestManager.successCallback = { (data: Data) in
+            self.parseDataToJson(data)
+        }
+        requestManager.failCallback = { (error: Error?, response: URLResponse?) in
+            let errorMessage = error?.localizedDescription ?? "Unknown Error"
+            self.delegate?.encounterError(errorMessage)
+        }
         requestManager.loadData()
     }
     
