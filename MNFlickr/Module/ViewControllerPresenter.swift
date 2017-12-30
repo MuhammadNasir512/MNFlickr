@@ -13,7 +13,7 @@ protocol ViewControllerPresenterProtocol: NSObjectProtocol {
     func succcess(imagesArray images: [ImageModel])
 }
 
-class ViewControllerPresenter: NSObject, ViewControllerInteractorProtocol {
+public class ViewControllerPresenter: NSObject, ViewControllerInteractorProtocol {
     
     weak var delegate: ViewControllerPresenterProtocol?
     var interactor: ViewControllerInteractor?
@@ -26,7 +26,6 @@ class ViewControllerPresenter: NSObject, ViewControllerInteractorProtocol {
 
     public func loadFlickrImages() {
         guard let interactor = interactor else { return }
-        interactor.delegate = self
         interactor.loadFlickrAPIData()
     }
 
@@ -37,5 +36,15 @@ class ViewControllerPresenter: NSObject, ViewControllerInteractorProtocol {
     func succcess(imagesArray images: [ImageModel]) {
         delegate?.succcess(imagesArray: images)
     }
+}
 
+public class ViewControllerWithTagsPresenter: ViewControllerPresenter {
+    
+    public func loadFlickrImages(withTags tags: String) {
+        guard let interactor = interactor as? ViewControllerWithTagsInteractor else { return }
+        var tagsWithoutSpaces = tags.replacingOccurrences(of: " ", with: ",")
+        tagsWithoutSpaces = tagsWithoutSpaces.replacingOccurrences(of: ".", with: ",")
+        interactor.loadFlickrAPIData(withTags: tagsWithoutSpaces)
+    }
+    
 }

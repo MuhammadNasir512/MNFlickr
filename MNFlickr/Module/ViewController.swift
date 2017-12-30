@@ -12,7 +12,7 @@ public class ViewController: UIViewController, ViewControllerPresenterProtocol {
 
     static let CellIdentifier = "ImageItemCell"
     
-	var presenter: ViewControllerPresenter?
+	var presenter: ViewControllerWithTagsPresenter?
     fileprivate var imagesArray: [ImageModel]?
     
     @IBOutlet weak var tableView: UITableView?
@@ -38,11 +38,16 @@ public class ViewController: UIViewController, ViewControllerPresenterProtocol {
         guard let tableView = tableView else { return }
         imagesArray = images
         tableView.reloadData()
+        tableView.setContentOffset(CGPoint.zero, animated: true)
     }
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let height = tableView.bounds.size.height / 2.5
+        return height
+    }
     public func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -58,5 +63,21 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         guard let cell = cellOptional, let model = imagesArray?[indexPath.row] else { return UITableViewCell() }
         cell.reloadCell(withModel: model)
         return cell
+    }
+}
+
+extension ViewController: UISearchBarDelegate {
+    
+    public func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        if let text = searchBar.text {
+            presenter?.loadFlickrImages(withTags: text)
+        }
+    }
+    
+    public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if searchText.count == 0 {
+            presenter?.loadFlickrImages()
+        }
     }
 }

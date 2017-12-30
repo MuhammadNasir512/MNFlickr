@@ -21,8 +21,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="131" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="a7J-TT-vAp">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Tags, e.g, landscape, red" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wRG-JP-Z4p">
+                                <rect key="frame" x="0.0" y="64" width="375" height="44"/>
+                                <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="0jq-p7-c91"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="IFx-lo-4w8"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="131" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="a7J-TT-vAp">
+                                <rect key="frame" x="0.0" y="108" width="375" height="559"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
@@ -33,10 +44,13 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="wRG-JP-Z4p" secondAttribute="trailing" id="00a-4O-nsq"/>
+                            <constraint firstItem="wRG-JP-Z4p" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="7Aw-SM-TkQ"/>
                             <constraint firstItem="a7J-TT-vAp" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ch7-Vb-QrU"/>
-                            <constraint firstItem="a7J-TT-vAp" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="GJM-DR-HPk"/>
                             <constraint firstAttribute="trailing" secondItem="a7J-TT-vAp" secondAttribute="trailing" id="Khb-Gv-gSi"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="a7J-TT-vAp" secondAttribute="bottom" id="MqB-No-d96"/>
+                            <constraint firstItem="wRG-JP-Z4p" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="VP1-JY-xJr"/>
+                            <constraint firstItem="a7J-TT-vAp" firstAttribute="top" secondItem="wRG-JP-Z4p" secondAttribute="bottom" id="YXD-gE-8CM"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ot6-2M-MOo"/>

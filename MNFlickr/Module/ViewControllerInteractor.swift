@@ -14,7 +14,7 @@ protocol ViewControllerInteractorProtocol: NSObjectProtocol {
     func succcess(imagesArray images: [ImageModel])
 }
 
-class ViewControllerInteractor: NSObject {
+public class ViewControllerInteractor: NSObject {
     
     weak var delegate: ViewControllerInteractorProtocol?
     var requestManager = RequestsManager()
@@ -30,9 +30,11 @@ class ViewControllerInteractor: NSObject {
         
         requestManager.urlString = urlString
         requestManager.successCallback = { (data: Data) in
+            self.urlString = Constants.APIURL
             self.parseDataToJson(data)
         }
         requestManager.failCallback = { (error: Error?, response: URLResponse?) in
+            self.urlString = Constants.APIURL
             let errorMessage = error?.localizedDescription ?? "Unknown Error"
             self.delegate?.encounterError(errorMessage)
         }
@@ -64,5 +66,12 @@ class ViewControllerInteractor: NSObject {
             imagesArray.append(imageModel)
         }
         delegate?.succcess(imagesArray: imagesArray)
+    }
+}
+
+public class ViewControllerWithTagsInteractor: ViewControllerInteractor {
+    public func loadFlickrAPIData(withTags tags: String) {
+        urlString = "\(urlString)&tags=\(tags)"
+        super.loadFlickrAPIData()
     }
 }
