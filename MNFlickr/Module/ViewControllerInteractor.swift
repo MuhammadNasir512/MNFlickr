@@ -11,29 +11,33 @@ import SwiftyJSON
 
 protocol ViewControllerInteractorProtocol: NSObjectProtocol {
     func encounterError(_ errorMessage: String)
-    func succcess(message errorMessage: String)
+    func succcess(imagesArray images: [ImageModel])
 }
 
 class ViewControllerInteractor: NSObject {
     
     weak var delegate: ViewControllerInteractorProtocol?
+    var requestManager = RequestsManager()
     
+//    var urlString = "https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1"
+    var urlString = "https://google.com/"
+
     private override init() { }
     
-    init(withDelegate delegate: ViewControllerInteractorProtocol) {
+    init(withDelegate delegate: ViewControllerInteractorProtocol?) {
         self.delegate = delegate
     }
     
     public func loadFlickrAPIData() {
-        let urLString = "https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1"
-        let requestManager = RequestsManager(
-            withUrlString: urLString, successCallback: { (data: Data) in
-                self.parseDataToJson(data)
-        },
-            failCallback: { (error: Error?, response: URLResponse?) in
-                let errorMessage = error?.localizedDescription ?? "Unknown Error"
-                self.delegate?.encounterError(errorMessage)
-        })
+        
+        requestManager.urlString = urlString
+        requestManager.successCallback = { (data: Data) in
+            self.parseDataToJson(data)
+        }
+        requestManager.failCallback = { (error: Error?, response: URLResponse?) in
+            let errorMessage = error?.localizedDescription ?? "Unknown Error"
+            self.delegate?.encounterError(errorMessage)
+        }
         requestManager.loadData()
     }
     
@@ -51,11 +55,16 @@ class ViewControllerInteractor: NSObject {
     
     private func createImageModels(fromJSON json: JSON) {
         
-        guard let jsonArray = json["items"].array else {
+        guard let jsonArray = json[Constants.JSONKeys.keyItems].array else {
             self.delegate?.encounterError("Unable to parse images from json")
             return
         }
-        delegate?.succcess(message: "Temp success callback")
+        
+        var imagesArray = [ImageModel]()
+        for jsonItem in jsonArray {
+            let imageModel = ImageModel(withJson: jsonItem)
+            imagesArray.append(imageModel)
+        }
+        delegate?.succcess(imagesArray: imagesArray)
     }
-
 }

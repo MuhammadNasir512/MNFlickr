@@ -13,25 +13,13 @@ typealias RequestsManagerFailCallback = (_ error: Error?, _ response: URLRespons
 
 class RequestsManager: NSObject {
     
-    var responseSuccessCallback: RequestsManagerSuccessCallback?
-    var responseFailCallback: RequestsManagerFailCallback?
-    var urLString: String?
-    
-    private override init() { }
-    
-    init(
-        withUrlString string: String,
-        successCallback: @escaping RequestsManagerSuccessCallback,
-        failCallback: @escaping RequestsManagerFailCallback) {
-        
-        urLString = string
-        responseSuccessCallback = successCallback;
-        responseFailCallback = failCallback;
-    }
+    var successCallback: RequestsManagerSuccessCallback?
+    var failCallback: RequestsManagerFailCallback?
+    var urlString: String?
     
     public func loadData() {
         
-        guard let urLString = urLString, let url = URL(string:urLString) else { return }
+        guard let urLString = urlString, let url = URL(string:urLString) else { return }
         let request = URLRequest(url: url)
         let session = URLSession(configuration: URLSessionConfiguration.default)
         
@@ -50,10 +38,10 @@ class RequestsManager: NSObject {
     }
     
     private func sendSuccessCallback(withData data: Data) {
-        responseSuccessCallback?(data)
+        successCallback?(data)
     }
     
     private func sendFailCallback(withError error: Error?, response: URLResponse?) {
-        responseFailCallback?(error, response)
+        failCallback?(error, response)
     }
 }
