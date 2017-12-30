@@ -10,6 +10,7 @@ import Foundation
 
 public class Constants {
     
+    static let APIURL = "https://api.flickr.com/services/feeds/photos_public.gne?format=json&tags=space&nojsoncallback=1"
     struct JSONKeys {
         static let keyItems = "items"
         static let keyTitle = "title"

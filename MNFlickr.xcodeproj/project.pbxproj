@@ -19,6 +19,8 @@
 		020A79F41FF724210093846E /* ViewControllerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020A79F31FF724210093846E /* ViewControllerMock.swift */; };
 		020A79F61FF726730093846E /* MockPresenterDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020A79F51FF726730093846E /* MockPresenterDelegate.swift */; };
 		020A79F81FF727790093846E /* MockInteractorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020A79F71FF727790093846E /* MockInteractorDelegate.swift */; };
+		020A7A021FF741BF0093846E /* ImageItemTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 020A7A001FF741BF0093846E /* ImageItemTableCell.swift */; };
+		020A7A031FF741BF0093846E /* ImageItemTableCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 020A7A011FF741BF0093846E /* ImageItemTableCell.xib */; };
 		02B44D1E1FF054BE00907F11 /* DataParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B44D1D1FF054BE00907F11 /* DataParser.swift */; };
 		02B44D211FF06E1900907F11 /* DataParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B44D201FF06E1900907F11 /* DataParserTests.swift */; };
 		02B44D241FF0764400907F11 /* FlickrFixture.json in Resources */ = {isa = PBXBuildFile; fileRef = 02B44D231FF0764400907F11 /* FlickrFixture.json */; };
@@ -79,6 +81,8 @@
 		020A79F31FF724210093846E /* ViewControllerMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerMock.swift; sourceTree = "<group>"; };
 		020A79F51FF726730093846E /* MockPresenterDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockPresenterDelegate.swift; sourceTree = "<group>"; };
 		020A79F71FF727790093846E /* MockInteractorDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockInteractorDelegate.swift; sourceTree = "<group>"; };
+		020A7A001FF741BF0093846E /* ImageItemTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageItemTableCell.swift; sourceTree = "<group>"; };
+		020A7A011FF741BF0093846E /* ImageItemTableCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ImageItemTableCell.xib; sourceTree = "<group>"; };
 		02B44D1D1FF054BE00907F11 /* DataParser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataParser.swift; sourceTree = "<group>"; };
 		02B44D201FF06E1900907F11 /* DataParserTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataParserTests.swift; sourceTree = "<group>"; };
 		02B44D231FF0764400907F11 /* FlickrFixture.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = FlickrFixture.json; sourceTree = "<group>"; };
@@ -162,6 +166,7 @@
 		020137E11FF0053D00824DB8 /* MNFlickr */ = {
 			isa = PBXGroup;
 			children = (
+				020A79F91FF7310A0093846E /* Views */,
 				D2F6EAB61FF685DB00ABEBF8 /* UI */,
 				02D896121FF5B6C4006566C4 /* Utilities */,
 				02B44D2F1FF3232F00907F11 /* Models */,
@@ -206,6 +211,15 @@
 				02B44D1D1FF054BE00907F11 /* DataParser.swift */,
 			);
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		020A79F91FF7310A0093846E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				020A7A001FF741BF0093846E /* ImageItemTableCell.swift */,
+				020A7A011FF741BF0093846E /* ImageItemTableCell.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		02B44D1F1FF06DE000907F11 /* Classes */ = {
@@ -410,7 +424,8 @@
 				TargetAttributes = {
 					020137DE1FF0053D00824DB8 = {
 						CreatedOnToolsVersion = 8.1;
-						ProvisioningStyle = Manual;
+						DevelopmentTeam = 4CY9HM7GKY;
+						ProvisioningStyle = Automatic;
 					};
 					020137F21FF0053D00824DB8 = {
 						CreatedOnToolsVersion = 8.1;
@@ -452,6 +467,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				020137ED1FF0053D00824DB8 /* LaunchScreen.storyboard in Resources */,
+				020A7A031FF741BF0093846E /* ImageItemTableCell.xib in Resources */,
 				020137EA1FF0053D00824DB8 /* Assets.xcassets in Resources */,
 				020137E81FF0053D00824DB8 /* Main.storyboard in Resources */,
 			);
@@ -625,6 +641,7 @@
 				020138121FF0137100824DB8 /* RequestsManager.swift in Sources */,
 				02B44D2C1FF0803100907F11 /* ViewControllerInteractor.swift in Sources */,
 				D2F6EABD1FF6940E00ABEBF8 /* Module.swift in Sources */,
+				020A7A021FF741BF0093846E /* ImageItemTableCell.swift in Sources */,
 				02B44D2E1FF0889400907F11 /* ViewControllerPresenter.swift in Sources */,
 				02B44D1E1FF054BE00907F11 /* DataParser.swift in Sources */,
 				020137E31FF0053D00824DB8 /* AppDelegate.swift in Sources */,
@@ -736,7 +753,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -779,7 +796,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -792,10 +809,11 @@
 			baseConfigurationReference = F53A9FE0BDB3F7DF96265946 /* Pods-MNFlickr.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 4CY9HM7GKY;
 				INFOPLIST_FILE = MNFlickr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Home.MNFlickr;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mnapps.testing04;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};
@@ -806,10 +824,11 @@
 			baseConfigurationReference = 6E320C2ECEC9FA3C32280441 /* Pods-MNFlickr.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = 4CY9HM7GKY;
 				INFOPLIST_FILE = MNFlickr/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = Home.MNFlickr;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mnapps.testing04;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
 			};

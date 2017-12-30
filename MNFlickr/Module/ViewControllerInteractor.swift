@@ -18,9 +18,7 @@ class ViewControllerInteractor: NSObject {
     
     weak var delegate: ViewControllerInteractorProtocol?
     var requestManager = RequestsManager()
-    
-//    var urlString = "https://api.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1"
-    var urlString = "https://google.com/"
+    var urlString = Constants.APIURL
 
     private override init() { }
     

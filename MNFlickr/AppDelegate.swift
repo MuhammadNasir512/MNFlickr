@@ -12,15 +12,17 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var module: Module?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        
         let mainStoryboardIpad = UIStoryboard(name: "Main", bundle: nil)
         if let rootViewController = mainStoryboardIpad.instantiateViewController(withIdentifier: "view_controller") as? ViewController {
             self.window = UIWindow(frame: UIScreen.main.bounds)
-            self.window?.rootViewController = rootViewController
-            self.window?.makeKeyAndVisible()
+            setupWindow(withRootViewController: rootViewController)
             setupHomeScreenModule(withViewController: rootViewController)
         }
+        
         return true
     }
 
@@ -31,6 +33,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         module.presenter = presenter
         module.interactor = interactor
         module.setupModule()
+        self.module = module
+    }
+    
+    private func findNavigationController() -> UINavigationController? {
+        let mainStoryboardIpad = UIStoryboard(name: "Main", bundle: nil)
+        if let navigationController = mainStoryboardIpad.instantiateViewController(withIdentifier: "navigation_controller") as? UINavigationController {
+            return navigationController
+        }
+        return nil
+    }
+    
+    private func setupWindow(withRootViewController viewController: UIViewController) {
+        self.window = UIWindow(frame: UIScreen.main.bounds)
+        if let navigationController = findNavigationController() {
+            navigationController.setViewControllers([viewController], animated: true)
+            self.window?.rootViewController = navigationController
+        }
+        else {
+            self.window?.rootViewController = viewController
+        }
+        self.window?.makeKeyAndVisible()
     }
 }
 
