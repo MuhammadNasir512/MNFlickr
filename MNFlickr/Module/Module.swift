@@ -27,6 +27,7 @@ class Module: NSObject {
             let interactor = interactor
             
             else { return }
+        
         viewController.presenter = presenter
         presenter.interactor = interactor
     }
