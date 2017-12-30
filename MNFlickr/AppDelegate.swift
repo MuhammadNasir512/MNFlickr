@@ -27,8 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     private func setupHomeScreenModule(withViewController viewController: ViewController) {
-        let presenter = ViewControllerPresenter(withDelegate: viewController)
-        let interactor = ViewControllerInteractor(withDelegate: presenter)
+        let presenter = ViewControllerWithTagsPresenter(withDelegate: viewController)
+        let interactor = ViewControllerWithTagsInteractor(withDelegate: presenter)
         let module = Module(withViewController: viewController)
         module.presenter = presenter
         module.interactor = interactor

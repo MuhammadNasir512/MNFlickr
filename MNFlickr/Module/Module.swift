@@ -11,8 +11,8 @@ import UIKit
 class Module: NSObject {
     
     var viewController: ViewController?
-    var presenter: ViewControllerPresenter?
-    var interactor: ViewControllerInteractor?
+    var presenter: ViewControllerWithTagsPresenter?
+    var interactor: ViewControllerWithTagsInteractor?
     
     private override init() { }
     
@@ -30,5 +30,6 @@ class Module: NSObject {
         
         viewController.presenter = presenter
         presenter.interactor = interactor
+        interactor.delegate = presenter
     }
 }
