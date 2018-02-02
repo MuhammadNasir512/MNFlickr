@@ -15,8 +15,8 @@ public class ModuleTests: XCTestCase {
         let mockPresenterDelegate = MockPresenterDelegate()
         let mockInteractorDelegate = MockInteractorDelegate()
         
-        let presenter = ViewControllerPresenter(withDelegate: mockPresenterDelegate)
-        let interactor = ViewControllerInteractor(withDelegate: mockInteractorDelegate)
+        let presenter = ViewControllerWithTagsPresenter(withDelegate: mockPresenterDelegate)
+        let interactor = ViewControllerWithTagsInteractor(withDelegate: mockInteractorDelegate)
         
         let viewController = ViewControllerMock()
         let module = Module(withViewController: viewController)
@@ -31,3 +31,4 @@ public class ModuleTests: XCTestCase {
         XCTAssertNotNil(interactor.delegate)
     }
 }
+

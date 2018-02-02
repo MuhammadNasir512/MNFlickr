@@ -21,3 +21,4 @@ public class MockPresenterDelegate: NSObject, ViewControllerPresenterProtocol {
         expectation?.fulfill()
     }
 }
+

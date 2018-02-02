@@ -12,18 +12,23 @@ import XCTest
 class ViewControllerPresenterTests: XCTestCase {
     
     func testWhenLoadImagesMethodCalled_AndThereWereNoImages_ThenItReturnNoImages() {
-        let interactorMock = ViewControllerInteractorMock(withDelegate: nil)
-        let fakeDelegate = MockPresenterDelegate()
-        let presenterUnderTest = ViewControllerPresenter(withDelegate: fakeDelegate)
+        let fakeInteractorDelegate = MockInteractorDelegate()
+        let interactorMock = ViewControllerInteractorMock(withDelegate: fakeInteractorDelegate)
+        let fakePresenterDelegate = MockPresenterDelegate()
+        let presenterUnderTest = ViewControllerWithTagsPresenter(withDelegate: fakePresenterDelegate)
         
-        let expect = expectation(description: "Expectation")
-        fakeDelegate.expectation = expect
+        let presenterExpectation = expectation(description: "presenterExpectation")
+        fakePresenterDelegate.expectation = presenterExpectation
+        let interactorExpectation = expectation(description: "interactorExpectation")
+        fakeInteractorDelegate.expectation = interactorExpectation
         
+        let tags = "landscape"
         presenterUnderTest.interactor = interactorMock
-        presenterUnderTest.loadFlickrImages()
+        presenterUnderTest.loadFlickrImages(withTags: tags)
         
-        waitForExpectations(timeout: 5) { error in
-            guard let result = fakeDelegate.fakeImages else {
+        let result = XCTWaiter().wait(for: [presenterExpectation, interactorExpectation], timeout: 4, enforceOrder: true)
+        if result == .completed {
+            guard let result = fakePresenterDelegate.fakeImages else {
                 XCTFail("Expected delegate to be called")
                 return
             }
@@ -34,19 +39,23 @@ class ViewControllerPresenterTests: XCTestCase {
     
     func testWhenLoadImagesMethodCalled_AndThereWereSomeImages_ThenItReturnThoseImages() {
         let imagesToFake = 5
-        let interactorMock = ViewControllerInteractorMock(withDelegate: nil)
-        interactorMock.numberOfImagesToReturn = imagesToFake
-        let fakeDelegate = MockPresenterDelegate()
-        let presenterUnderTest = ViewControllerPresenter(withDelegate: fakeDelegate)
+        let fakeInteractorDelegate = MockInteractorDelegate()
+        let interactorMock = ViewControllerInteractorMock(withDelegate: fakeInteractorDelegate)
+        let fakePresenterDelegate = MockPresenterDelegate()
+        let presenterUnderTest = ViewControllerWithTagsPresenter(withDelegate: fakePresenterDelegate)
         
-        let expect = expectation(description: "Expectation")
-        fakeDelegate.expectation = expect
+        let presenterExpectation = expectation(description: "presenterExpectation")
+        fakePresenterDelegate.expectation = presenterExpectation
+        let interactorExpectation = expectation(description: "interactorExpectation")
+        fakeInteractorDelegate.expectation = interactorExpectation
         
+        let tags = "landscape"
         presenterUnderTest.interactor = interactorMock
-        presenterUnderTest.loadFlickrImages()
+        presenterUnderTest.loadFlickrImages(withTags: tags)
         
-        waitForExpectations(timeout: 4) { error in
-            guard let result = fakeDelegate.fakeImages else {
+        let result = XCTWaiter().wait(for: [presenterExpectation, interactorExpectation], timeout: 4, enforceOrder: true)
+        if result == .completed {
+            guard let result = fakePresenterDelegate.fakeImages else {
                 XCTFail("Expected delegate to be called")
                 return
             }

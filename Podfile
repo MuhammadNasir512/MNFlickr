@@ -4,7 +4,7 @@ platform :ios, '9.0'
     use_frameworks!
 
     pod "SwiftyJSON", "3.1.4"
-    pod "SDWebImage", "~> 4.0"
+    pod "SDWebImage", "4.2.2"
     
     target 'MNFlickrTests' do
         inherit! :search_paths

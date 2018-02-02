@@ -10,12 +10,12 @@ import UIKit
 import SwiftyJSON
 @testable import MNFlickr
 
-class ViewControllerInteractorMock: ViewControllerInteractor {
+class ViewControllerInteractorMock: ViewControllerWithTagsInteractor {
     
     var loadFlickrAPIDataCallCount = 0
     var numberOfImagesToReturn = 0
     
-    override func loadFlickrAPIData() {
+    override func loadFlickrAPIData(withTags tags: String) {
         loadFlickrAPIDataCallCount += 1
         let imagesArray = fakeImagesArray()
         delegate?.succcess(imagesArray: imagesArray)
@@ -37,3 +37,4 @@ class ViewControllerInteractorMock: ViewControllerInteractor {
         return JSON(data)
     }
 }
+

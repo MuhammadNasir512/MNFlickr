@@ -20,3 +20,4 @@ public class MockInteractorDelegate: NSObject, ViewControllerInteractorProtocol 
         expectation?.fulfill()
     }
 }
+
